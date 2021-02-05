@@ -402,6 +402,34 @@ window.onload = function() {
       $('#navi a[href="#' + id + '"]').addClass('current'); 
     }
   })
+
+  $("#contact-form").on("submit", (e) => {
+	e.preventDefault();
+	
+	let data = $(e.target).serializeArray();
+	var returnArray = {};
+    for (var i = 0; i < data.length; i++){
+        returnArray[data[i]['name']] = data[i]['value'];
+    }
+
+	Email.send({
+		SecureToken : "df9f8d6d-d63a-4386-bf58-0e0a8e9f1277",
+		To : '619chaitanyanaik@gmail.com',
+		From : "chaitanyademon@gmail.com",
+		Subject : returnArray.subject,
+		Body : `${returnArray.name}(${returnArray.email}) sent: ${returnArray.message}`
+	}).then(
+	  message => {
+			if (message === "OK")
+		  		alert("Mail Sent Successfully! Thank You for contacting!");
+			else
+				alert(message)
+
+		}
+	);
+		
+  })
+
 })(jQuery);
 
 hash = function(h){
